@@ -1,0 +1,11 @@
+<h1>Voici la liste de tous les sessions</h1>
+{% for session in lesSessions %}
+<table border="1">    
+    <tr>
+        <td>  title</td>
+        <td>{{session.title}}</td>
+        <td><a href="{% url 'Sessiondetail' session.pk %}">Voir les details</a></td>
+    </tr>
+
+</table>
+{%endfor%}

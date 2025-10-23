@@ -1,0 +1,22 @@
+<h2>Liste des conférences</h2>
+
+<table border="1">
+    <tr>
+        <td>Titre</td>
+        <td>Locationn</td>
+        <td>action</td>
+    </tr>
+
+    {% for c in Liste_conferences %}
+        <tr>
+            <td>{{ c.name }}</td>
+            <td>{{ c.location }}</td>
+            <td><a href="{% url 'conference_detail' c.pk %}">Voir Détails</a></td>
+
+            
+]
+        </tr>
+    {% endfor %}
+</table>
+
+

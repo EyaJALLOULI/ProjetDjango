@@ -69,7 +69,7 @@ class SubmissionAdmin(admin.ModelAdmin):
     list_display = ('title', 'status', 'user_id', 'conference_id', 'payed', 'submission_date', 'short_abstract')
 
     list_filter = ('status', 'payed', 'conference_id', 'submission_date')
-    search_fields = ('title', 'keywords', 'user_id__username')
+    search_fields =('title', 'keywords', 'user_id__username')
 
     list_editable = ('status', 'payed')  #permet de modifier ces champs directement depuis la liste
 
@@ -85,8 +85,27 @@ class SubmissionAdmin(admin.ModelAdmin):
         if len(obj.abstract) > 50:
             return obj.abstract[:50]
         return obj.abstract
-    short_abstract.short_description = 'Abstract' 
+    short_abstract.short_description = 'Abstract'
 
+
+
+    #new
+
+    #queryset = fonction update
+    @admin.action(description='Mark selected submissions as payed')
+    def makrk_as_payed(modeladmin, request, queryset):
+        queryset.update(payed=True)
+
+    #Ajout action pr accepte soumissions en clic
+    @admin.action
+    def mark_as_accepted(modeladmin, request, queryset):
+        queryset.update(status='accepted')
+
+    
+    actions=['makrk_as_payed', 'mark_as_accepted'] 
+
+    
+        
 
        
     
