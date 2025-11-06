@@ -1,0 +1,11 @@
+{% extends "projet.html" %}
+
+{% block content %}
+    <p>Voulez-vous supprimer la conférence <strong>{{ object.name }}</strong> ?</p>
+
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit">Oui</button>
+        <a href="{% url 'all_conferences' %}">Non</a>
+    </form>
+{% endblock %}

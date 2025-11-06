@@ -47,7 +47,7 @@ class Submission(models.Model):
     title=models.CharField(max_length=255)
     abstract=models.TextField()
     keywords=models.TextField(validators=
-                              [KeyWord_Validators]) #séparés par des virgules
+                              [KeyWord_Validators]) 
     paper=models.FileField(upload_to='papers/', validators=[paper_validators]) 
 
     CHOICES=[

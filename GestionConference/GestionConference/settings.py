@@ -67,6 +67,12 @@ TEMPLATES = [
             ],
         },
     },
+
+]
+STATIC_URL = '/static/'  # L'URL pour accéder aux fichiers statiques dans le navigateur
+
+STATICFILES_DIRS = [
+    BASE_DIR / 'static',  # Le dossier où tu mets tes fichiers CSS, JS, images, etc.
 ]
 
 WSGI_APPLICATION = 'GestionConference.wsgi.application'
@@ -125,3 +131,5 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL='UserApp.User'
+
+
