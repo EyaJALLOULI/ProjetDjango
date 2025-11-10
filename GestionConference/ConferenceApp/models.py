@@ -42,6 +42,7 @@ class Submission(models.Model):
     submission_id=models.CharField(primary_key=True,unique=True,editable=False,max_length=255,default=generate_unique_submission_id)
 
     user_id=models.ForeignKey ('UserApp.User',on_delete=models.CASCADE,related_name='submissions')
+    
     conference_id=models.ForeignKey('ConferenceApp.Conference',on_delete=models.CASCADE ,related_name='conference_submissions')
 
     title=models.CharField(max_length=255)
@@ -65,7 +66,7 @@ class Submission(models.Model):
     created_at=models.DateTimeField(auto_now_add=True)
     updated_at=models.DateTimeField(auto_now=True)
 
-   
+"""
     def clean(self):
        # submission_date = timezone.now().date()
        # conference = self.conference_id 
@@ -80,7 +81,8 @@ class Submission(models.Model):
         ).count()
         if user_submissions_today >= 3:
             raise ValidationError("You can submit to a maximum of 3 conferences per day.")
-        
+
+ 
     def save(self, *args, **kwargs):
         if not self.submission_id:
             new_id = generate_unique_submission_id()
@@ -90,7 +92,7 @@ class Submission(models.Model):
         super().save(*args, **kwargs)
 
         
-
+"""
         
         
     

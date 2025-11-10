@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+{% if view.object.pk %} <!--si modification on envoi un pk -> c est update  --> 
+<h2>Modifier une submission</h2>
+{% else %}
+<h2>Ajouter une submission</h2>
+{% endif %}
+
+ 
+<form method="post"> 
+    {% csrf_token %}   <!--token pour garentir la securite pr chaque form c est obligatoire -->
+    {{form.as_p}}   <!-- form est une variable par defaut envoye par CreateView -->
+    <button type="submit">Enregistrer</button>
+</form>
+
+
+{% endblock %}

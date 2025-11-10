@@ -5,7 +5,16 @@
     <nav>
         <a>Home</a>
         <a href="{% url 'all_conferences' %}">Conferences</a>
+        <a href="{% url 'Submission_add' %}">Submission à une conférence</a>
+
         <a href="">Contact</a>
+        {%if user.is_authenticated %}
+        <a>{{user.username}}</a>
+        <a href="{% url 'logout' %}">logout</a>
+        {% else %}
+        <a href="{% url 'login' %}">Login</a>
+        <a href="{% url 'register' %}">Inscription</a>
+        {% endif %}
     </nav>
 
     <div>

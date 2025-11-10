@@ -1,6 +1,6 @@
 
 from django import forms
-from .models import Conference
+from .models import Conference,Submission
 
 class ConferenceFormModel(forms.ModelForm):
     #pr ajouter les chose personnalise 
@@ -20,4 +20,46 @@ class ConferenceFormModel(forms.ModelForm):
             'end_date': forms.DateInput(attrs={'type':'date',}),
             'name':forms.TextInput(attrs={'placeholder':'nom de la conference'})
         }
+
+
+
+
+class SubmissionFormModel(forms.ModelForm):
+    class Meta:
+        model = Submission
+        # Inclure tous les champs que l'utilisateur peut remplir
+        fields = ['conference_id', 'title', 'abstract', 'keywords', 'paper', 'status', 'payed']
+
+        # Pour changer les labels et rendre le formulaire plus lisible
+        labels = {
+            'conference_id': 'Conference',
+            'title': 'Title',
+            'abstract': 'Abstract',
+            'keywords': 'Keywords',
+            'paper': 'Upload Paper',
+            'status': 'Submission Status',
+            'payed': 'Payment Completed?',
+        }
+
+        
+
+class SubmissionUpdateFormModel(forms.ModelForm):
+    class Meta:
+        model = Submission
+        # Inclure tous les champs que l'utilisateur peut Modifier title, abstract, keywords, paper.
+        fields = [ 'title', 'abstract', 'keywords', 'paper']
+
+        # Pour changer les labels et rendre le formulaire plus lisible
+        labels = {
+            'conference_id': 'Conference',
+            'title': 'Title',
+            'abstract': 'Abstract',
+            'keywords': 'Keywords',
+            'paper': 'Upload Paper',
+            
+        }
+
+
+
+        
 

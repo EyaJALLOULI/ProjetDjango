@@ -133,3 +133,11 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 AUTH_USER_MODEL='UserApp.User'
 
 
+#ON A PAS personnalise la fonction donc on a pas succes url donc on modifie ici 
+
+LOGIN_REDIRECT_URL="all_conferences"
+
+LOGOUT_REDIRECT_URL="login"
+
+
+LOGIN_URL="login"
