@@ -37,10 +37,21 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'rest_framework', # obligatoirement on le met ici
+    'django_filters',
     'UserApp',
     'ConferenceApp',
     'SessionApp',
+    'SessionAppApi',    ## n est pas obligatoire
+ 
 ]
+REST_FRAMEWORK = {
+    'DEFAULT_FILTER_BACKENDS': [
+        'django_filters.rest_framework.DjangoFilterBackend',
+        'rest_framework.filters.SearchFilter',
+        'rest_framework.filters.OrderingFilter',
+    ],
+}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -141,3 +152,11 @@ LOGOUT_REDIRECT_URL="login"
 
 
 LOGIN_URL="login"
+
+
+
+
+import os
+
+MEDIA_URL = '/media/'  # URL pour accéder aux fichiers
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')  # dossier réel sur le disque

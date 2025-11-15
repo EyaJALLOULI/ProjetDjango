@@ -15,13 +15,13 @@ urlpatterns = [
 
     
     path('<int:pk>/delete/', views.ConferenceDelete.as_view(), name='conference_delete'),
-
-    path('Liste_Submission/<int:pk>', views.SubmissionListView.as_view(), name='all_Submission'),
-
-    path('details_submission/<str:pk>', views.SubmissionDetailView.as_view(), name='submission_detail'),
-
-     path('form-Submission/',views.SubmissionCreateView.as_view(), name='Submission_add'),
-
-     path('<str:pk>/update', views.SubmissionUpdate.as_view(), name='Submission_Update'),
-
+      path('Liste_Submission/<str:pk>/', views.SubmissionListView.as_view(), name='all_Submissions'),
+      path('details/<str:pk>/', views.SubmissionsDetailView.as_view(), name='details'),
+      path('formSubmission/',views.SubmissionCreateView .as_view(), name='Submission_add'),
+      path('UpdateSubmission/<str:pk>/',views.SubmissionUpdate .as_view(), name='UpdateSubmission'),
 ]
+
+
+
+
+

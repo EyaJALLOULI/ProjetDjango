@@ -14,6 +14,7 @@
         <td>Titre</td>
         <td>Locationn</td>
         <td>action</td>
+        <td>Les soumissions</td>
     </tr>
 
     {% for c in Liste_conferences %}
@@ -29,7 +30,7 @@
                 <td><a href="{% url 'conference_delete' c.pk %}">Supprimer</a></td>
                 
             {% endif %}
-            <td><a href="{% url 'all_Submission' c.pk %}">Voir submissions</a></td>
+            <td><a href="{% url 'all_Submissions' c.conference_id %}">Voir submissions</a></td>
 
         </tr>
     {% endfor %}

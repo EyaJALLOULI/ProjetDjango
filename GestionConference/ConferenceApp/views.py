@@ -52,6 +52,7 @@ class ConferenceDelete( LoginRequiredMixin,DeleteView):
 
 
 
+"""
 
 class SubmissionListView( LoginRequiredMixin,ListView):
     model = Submission
@@ -95,7 +96,7 @@ class SubmissionCreateView(LoginRequiredMixin, CreateView):
 
         return super().form_valid(form)
         
-
+ 
 
     
 class SubmissionUpdate( LoginRequiredMixin,UpdateView):
@@ -105,3 +106,67 @@ class SubmissionUpdate( LoginRequiredMixin,UpdateView):
     #title, abstract, keywords, paper.
     form_class= SubmissionUpdateFormModel
     success_url=reverse_lazy("all_Submission") 
+
+     
+
+"""
+
+
+
+class SubmissionListView( LoginRequiredMixin,ListView):
+    model = Submission
+    context_object_name = 'Liste_Submission'
+   
+    template_name = 'Submissions/liste.html'
+
+    #on peut ne pas afficher tte la liste en faisant filtrage avec 
+    def get_queryset(self):
+        id = self.kwargs['pk']
+
+        return Submission.objects.filter(
+            conference_id=id,
+            user_id=self.request.user.pk
+        )
+
+class SubmissionsDetailView(LoginRequiredMixin,DetailView):
+    model = Submission
+    context_object_name = 'sub'
+    template_name = 'Submissions/details.html'
+
+from django.urls import path
+class SubmissionCreateView( LoginRequiredMixin,CreateView):
+    model=Submission
+    template_name="Submissions/Submissions_form.html"
+    
+    form_class=SubmissionFormModel 
+    
+    
+    
+    def get_success_url(self):
+        return reverse_lazy('all_Submissions', kwargs={'pk': self.object.conference_id_id})
+
+    def form_valid(self, form):
+        form.instance.user_id_id = self.request.user.pk
+        return super().form_valid(form)
+
+
+
+
+
+""" (Une soumission avec l’état accepté ou rejeté ne peut pas être modifiable) 
+b. 
+Les champs modifiables sont : title, abstract, keywords, paper. 
+c. 
+Les champs non modifiables : submission_id, submission_date, user. 
+
+"""
+
+class SubmissionUpdate( LoginRequiredMixin,UpdateView):
+    model=Submission
+    template_name="Submissions/Submissions_form.html"
+    form_class=SubmissionUpdateFormModel
+    def get_success_url(self):
+        return reverse_lazy('all_Submissions', kwargs={'pk': self.object.conference_id_id})
+
+
+          

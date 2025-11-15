@@ -22,15 +22,14 @@ class ConferenceFormModel(forms.ModelForm):
         }
 
 
-
+from django import forms
+from .models import Submission
+from django.utils.safestring import mark_safe
 
 class SubmissionFormModel(forms.ModelForm):
     class Meta:
         model = Submission
-        # Inclure tous les champs que l'utilisateur peut remplir
         fields = ['conference_id', 'title', 'abstract', 'keywords', 'paper', 'status', 'payed']
-
-        # Pour changer les labels et rendre le formulaire plus lisible
         labels = {
             'conference_id': 'Conference',
             'title': 'Title',
@@ -41,25 +40,20 @@ class SubmissionFormModel(forms.ModelForm):
             'payed': 'Payment Completed?',
         }
 
+    # Ajouter un lien de téléchargement si un fichier existe
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        if self.instance and self.instance.paper:
+            self.fields['paper'].help_text = mark_safe(
+                f'<a href="{self.instance.paper.url}" download>Télécharger le fichier actuel</a>'
+            )
+
         
+
 
 class SubmissionUpdateFormModel(forms.ModelForm):
+    #pr ajouter les chose personnalise 
     class Meta:
-        model = Submission
-        # Inclure tous les champs que l'utilisateur peut Modifier title, abstract, keywords, paper.
-        fields = [ 'title', 'abstract', 'keywords', 'paper']
-
-        # Pour changer les labels et rendre le formulaire plus lisible
-        labels = {
-            'conference_id': 'Conference',
-            'title': 'Title',
-            'abstract': 'Abstract',
-            'keywords': 'Keywords',
-            'paper': 'Upload Paper',
-            
-        }
-
-
-
-        
-
+        model=Submission
+        fields=['title','abstract','keywords','paper']
+       

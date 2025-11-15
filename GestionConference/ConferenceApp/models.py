@@ -41,7 +41,8 @@ class Conference(models.Model):
 class Submission(models.Model):
     submission_id=models.CharField(primary_key=True,unique=True,editable=False,max_length=255,default=generate_unique_submission_id)
 
-    user_id=models.ForeignKey ('UserApp.User',on_delete=models.CASCADE,related_name='submissions')
+    user_id=models.ForeignKey ('UserApp.User',on_delete=models.CASCADE,related_name='submissions') 
+    #user_id.submissions.all()
     
     conference_id=models.ForeignKey('ConferenceApp.Conference',on_delete=models.CASCADE ,related_name='conference_submissions')
 

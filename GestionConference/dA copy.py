@@ -61,7 +61,7 @@ urlpatterns = [
 
 ##########afficher detail d une seul instance selon leur pk
 #dans liste.html de ts les conference affichee
- <td><a href="{% url 'conference_detail' c.pk %}">Voir Détails</a></td>
+ <td><a href="{% url 'detail' c.pk %}">Voir Détails</a></td>
 #c de boucle for
  
 
@@ -95,14 +95,17 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
-    path('details/<int:pk>/', views.conferenceDetailView.as_view(), name='conference_detail'),   #<str:pk>
+    path('details/<int:pk>/', views.conferenceDetailView.as_view(), name='detail'),   #<str:pk>    ####il faut passer de conference 
 ]
 
 
 
 
 
+
+
 ########## creation de nouvelle instance -> affichage formulaire
+
 from ConferenceApp.models import Conference
 from django.views.generic import CreateView
 from django.urls import reverse_lazy
@@ -194,12 +197,14 @@ class ConferenceUpdate( LoginRequiredMixin,UpdateView):
 #le meme que create
 
 ### meme html
-path('<int:pk>/update/', views.ConferenceUpdate.as_view(), name='conference_Update'),
+
+
+path('<int:pk>/update/', views.ConferenceUpdate.as_view(), name='update'),
 
 #dans la liste des conf:
  {% if user.is_authenticated and user.role == 'commitee' %}
 
-                <td><a href="{% url 'conference_Update' c.pk %}">Modifier</a></td>
+                <td><a href="{% url 'update' c.pk %}">Modifier</a></td>
                 
 {% endif %}
 
@@ -231,21 +236,60 @@ class ConferenceDelete( LoginRequiredMixin,DeleteView):
 
 
 ### dans url
-    path('<int:pk>/delete/', views.ConferenceDelete.as_view(), name='conference_delete'),
+    path('<int:pk>/delete/', views.ConferenceDelete.as_view(), name='delete'),
 
 
 #dans la liste des conf:
  {% if user.is_authenticated and user.role == 'commitee' %}
-                <td><a href="{% url 'conference_delete' c.pk %}">Supprimer</a></td>
-                
+                <td><a href="{% url 'delete' c.pk %}">Supprimer</a></td>
 {% endif %}
-
-
-
 
 """
 
+####### remplir par user connecte 
+#views.py
+
+from django.shortcuts import render
+from .models import Reservation
+from django.views.generic import ListView,CreateView
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.urls import reverse_lazy
+from .forms import ReservationFormModel
+
+class ReservationListView(LoginRequiredMixin, ListView):
+    model = Reservation
+    context_object_name = 'reservations'  # nom du contexte pour le template
+    template_name = 'Reservations/liste.html'
+
+    def get_queryset(self):
+        # Retourne les réservations du user connecté
+        return self.request.user.reservations.all()
+    
+class ReservationCreate( LoginRequiredMixin,CreateView):
+    model=Reservation
+    template_name="Reservations/Reservation_form.html"
+    #fields="__all__" #j ai besoin de ts les fields du form sans personnalisation
+    form_class= ReservationFormModel #from .forms import ConferenceFormModel
+
+
+## ajoute par defaux l id de user conncectee
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        return super().form_valid(form)
+    
+    
+    success_url=reverse_lazy("reservations") 
+
+
+
+    
 
 
 
 
+
+
+
+### au lieu de success_url
+    def get_success_url(self):
+        return reverse_lazy('all_submissions', kwargs={'pk': self.object.conference_id})

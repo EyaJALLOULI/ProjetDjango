@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Liste des conférences</h2>
+
+<table border="1">
+    <tr>
+        <th>Titre</th>
+        <th>Status</th>
+        <th>Utilisateur</th>
+        <th>Conference ID</th>
+        <th>Date de soumission</th>
+        <th>Payé</th>
+        <th>Actions</th>
+    </tr>
+
+    {% for c in Liste_Submission %}
+        <tr>
+            <td>{{ c.title }}</td>
+            <td>{{ c.status }}</td>
+            <td>{{ c.user_id }}</td>
+            <td>{{ c.conference_id }}</td>
+            <td>{{ c.submission_date }}</td>
+            <td>{{ c.payed }}</td>
+            <td>
+                <a href="{% url 'details' c.pk %}">Détails</a> |
+                <a href="{% url 'UpdateSubmission' c.pk %}">Modifier</a>
+            </td>
+        </tr>
+    {% endfor %}
+</table>
+{% endblock %}

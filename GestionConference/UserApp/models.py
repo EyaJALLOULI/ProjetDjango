@@ -4,6 +4,8 @@ from django.core.exceptions import ValidationError
 from django.core.validators import RegexValidator
 
 import uuid #importation du module uuid pour la génération de  chaine de caractères aléatoires
+
+
 def generate_user_id():
     return "USER"+uuid.uuid4().hex[:4].upper()
 
